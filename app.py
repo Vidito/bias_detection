@@ -42,7 +42,7 @@ if 'data' in st.session_state:
     df = st.session_state['data']
     
     # Tabs
-    tab1, tab2, tab3 = st.tabs(["📊 Data Explorer", "⚖️ Score Analysis", "🕵️ Bias Detection"])
+    tab1,  tab3 = st.tabs(["📊 Data Explorer", "🕵️ Bias Detection"])
     
     with tab1:
         st.subheader("Citizen Database")
@@ -57,28 +57,6 @@ if 'data' in st.session_state:
         with col2:
              st.markdown("### Employment Status")
              st.bar_chart(df['Employment'].value_counts())
-
-    with tab2:
-        st.subheader("Social Utility Score Distribution")
-        
-        col1, col2 = st.columns([2, 1])
-        with col1:
-            fig, ax = plt.subplots()
-            sns.histplot(df['SocialUtilityScore'], kde=True, ax=ax, color='green')
-            ax.set_title("Distribution of Scores")
-            st.pyplot(fig)
-            
-        with col2:
-            st.metric("Average Score", int(df['SocialUtilityScore'].mean()))
-            st.metric("Highest Score", int(df['SocialUtilityScore'].max()))
-            st.metric("Lowest Score", int(df['SocialUtilityScore'].min()))
-            
-        st.markdown("### Score by Demographics")
-        option = st.selectbox("Compare Score by:", ['Origin', 'Gender', 'Employment'])
-        
-        fig, ax = plt.subplots(figsize=(8, 4))
-        sns.boxplot(x=option, y='SocialUtilityScore', data=df, ax=ax)
-        st.pyplot(fig)
 
     with tab3:
         st.subheader("Algorithmic Bias Audit (Fairlearn)")
